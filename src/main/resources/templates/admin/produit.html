@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../../static/css/myStyle.css"
+	th:href="@{/css/myStyle.css}" />
+</head>
+<body>
+	<header th:replace="template :: header"></header>
+	<div class="container spacer">
+		<div th:replace="template :: adminNav"></div>
+		<h1 th:text="${titre}"></h1>
+		<div class="col-xs-4 col-xs-offset-6">
+			<form class="form-inline" th:action="@{Index}" method="get">
+				<div class="form-group">
+					<label>Mot Clé :</label> <input type="text" class="form-control"
+						name="motCle" th:value="${motCle}" />
+					<button class="btn btn-primary" type="submit">Chercher</button>
+				</div>
+			</form>
+		</div>
+
+
+		<div class="col-xs-10">
+			<button class="btn btn-success" onclick="location.href='Form'">Ajouter</button>
+			<table class="table table-striped ">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Label</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="p:${pageProduits.content}">
+						<td th:text="${p.id}"></td>
+						<td th:text="${p.label}"></td>
+						<td style="width: 175px;"><a class="btn btn-primary"
+							th:href="@{Editer(id=${p.id})}">Editer</a> <a
+							class="btn btn-danger" th:href="@{Supprimer(id=${p.id})}">Supprimer</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<ul class="nav nav-pills">
+				<li th:each="pa:${pages}" th:class="${pa==pageCourante}?active:''">
+					<a th:text="${pa}" th:href="@{Index(page=${pa},motCle=${motCle})}"></a>
+				</li>
+			</ul>
+
+		</div>
+	</div>
+	<footer th:replace="template :: footer"></footer>
+</body>
+</html>

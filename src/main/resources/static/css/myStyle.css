@@ -1,0 +1,16 @@
+.spacer {
+	margin-top:50px;
+}
+
+.adminNav {
+	position: absolute;
+	left:0;
+	top:60px;
+	}
+	
+	.layerSlider {
+		padding:0;
+		height: 200px;
+		background-color: red;
+		margin-bottom: 10px;
+	}

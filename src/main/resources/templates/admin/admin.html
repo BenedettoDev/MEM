@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../../static/css/myStyle.css"
+	th:href="@{/css/myStyle.css}" />
+</head>
+<body>
+	<header th:replace="template :: header"></header>
+	<div class="container spacer" th:replace="template :: adminNav">
+	<h1>cc</h1>
+	        <div th:substituteby="index::logout"></div>
+	</div>
+	
+	<footer th:replace="template :: footer"></footer>
+</body>
+</html>

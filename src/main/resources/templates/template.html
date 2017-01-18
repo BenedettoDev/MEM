@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
+	th:href="@{/css/myStyle.css}" />
+</head>
+<body>
+	<header class="navbar navbar-inverse navbar-fixed-top"
+		th:fragment="header">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+								<a class="navbar-brand" href="#" th:href="@{/Index}">Pata Negra</a>
+<!-- 				<a class="navbar-brand" href="#" th:href="@{/Index}"><img style="width: 150px;height: auto;" th:src="@{/img/logo_200X200.png}"/></a> -->
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li th:classappend="${page == 'home' ? 'active' : ''}"><a
+						href="#" th:href="@{/Index}">Accueil</a></li>
+					<li th:classappend="${page == 'messages' ? 'active' : ''}"><a
+						href="#" th:href="@{/Produit/Index}">Produits</a></li>
+					<li th:classappend="${page == 'tasks' ? 'active' : ''}"><a
+						href="#" th:href="@{/Commande/Index}">Commandes</a></li>
+					<li th:classappend="${page == 'tasks' ? 'active' : ''}"><a
+						href="#" th:href="@{/Contact/Index}">Contact</a></li>
+
+				</ul>
+			
+				<ul class="nav navbar-nav navbar-right">
+					<!--                 <li th:if="${#authorization.expression('!isAuthenticated()')}"><a href="/signin" th:href="@{/Login}">Sign in</a></li> -->
+					<!--                 <li th:if="${#authorization.expression('isAuthenticated()')}"><a href="/logout" th:href="@{/Logout}">Logout</a></li> -->
+					<li sec:authorize="isAuthenticated()"><a href="/signin" th:href="@{/Admin/Index}">Admin
+							Panel</a></li>
+					<li sec:authorize="isAnonymous()"><a href="/signin" th:href="@{/Login}">Sign in</a></li>
+					<li sec:authorize="isAuthenticated()"><a href="/logout"
+						th:href="@{/Logout}">Logout</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</header>
+	<div class="col-xs-12 layerSlider" th:fragment="layerSliger"></div>
+	<div class="col-xs-1 adminNav" th:fragment="adminNav">
+		<ul class="nav nav-pills nav-stacked ">
+			<li th:classappend="${titre == 'Produits' ? 'active' : ''}"><a
+				th:href="@{/Admin/Produit/Index}">Produits</a></li>
+			<li th:classappend="${titre == 'Articles' ? 'active' : ''}"><a
+				href="article">Articles</a></li>
+			<li th:classappend="${titre == 'Commandes' ? 'active' : ''}"><a
+				href="commande">Commandes</a></li>
+			<li th:classappend="${titre == 'Suggestions' ? 'active' : ''}"><a
+				href="suggestion">Suggestions</a></li>
+			<li th:classappend="${titre == 'Utilisateur' ? 'active' : ''}"><a
+				href="Utilisateur">Utilisateurs</a></li>
+		</ul>
+
+	</div>
+
+	<footer th:fragment="footer">
+		<div class="container">
+			<p style="text-align: center;">@footer 456</p>
+		</div>
+	</footer>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+
+</html>

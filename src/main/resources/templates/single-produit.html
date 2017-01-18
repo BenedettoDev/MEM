@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
+	th:href="@{/css/myStyle.css}" />
+</head>
+<body>
+	<header th:replace="template :: header"></header>
+	<div class="container spacer">
+	<h1 th:text="${produit.nom}"></h1>
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+			<p>Lieu :<span th:text="${produit.lieu}"></span></p>
+			<p>Prix :<span th:text="${produit.prix}+' €/'+${produit.unite}"></span></p>
+			<p>Categorie : <span th:text="${produit.categorie}"></span></p>
+			<p th:text="${produit.description}"></p>
+			
+		</div>
+	</div>
+	</div>
+	<footer th:replace="template :: footer"></footer>
+</body>
+</html>

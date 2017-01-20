@@ -47,7 +47,7 @@
 								">
 									<option value="NONE" label="-- Select --"></option>
 									<option value="Autre" th:text="Autre"></option>
-									<option th:each="lieu : ${lieux}" th:value="${lieu.nom}" th:text="${lieu.nom}" th:seleted="${lieu.nom}"></option>		
+									<option th:each="lieu : ${lieux}" th:value="${lieu.id}" th:text="${lieu.nom}" th:seleted="${lieu.nom}"></option>		
 								</select> 
 								<div class="input-group">
 									<input type="text" id="input_lieu" style="display: none;"	th:field="*{lieu}" class="form-control" /> 

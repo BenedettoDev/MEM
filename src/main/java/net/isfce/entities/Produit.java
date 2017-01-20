@@ -5,6 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
 
@@ -12,10 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Produit implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -25,8 +26,9 @@ public class Produit implements Serializable {
 	
 	private String nom;
 	
-	@NotEmpty
-	private String lieu;
+	@ManyToOne
+	@JoinColumn(name="FK_lieu")
+	private Lieu lieu;
 	
 	@DecimalMin(value="0.50")
 	private double prix;
@@ -44,7 +46,7 @@ public class Produit implements Serializable {
 		super();
 	}
 
-	public Produit(Long id, String label, String nom, String lieu, double prix, String unite, String photo,
+	public Produit(Long id, String label, String nom, Lieu lieu, double prix, String unite, String photo,
 			String description) {
 		super();
 		this.id = id;
@@ -56,7 +58,7 @@ public class Produit implements Serializable {
 		this.photo = photo;
 		this.description = description;
 	}
-	public Produit(Long id, String label, String nom, String lieu, double prix, String unite, String photo,
+	public Produit(Long id, String label, String nom, Lieu lieu, double prix, String unite, String photo,
 			String description,String categorie) {
 		this(id,label,nom,lieu,prix,unite,photo,description);
 		this.categorie=categorie;
@@ -91,10 +93,10 @@ public class Produit implements Serializable {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public String getLieu() {
+	public Lieu getLieu() {
 		return lieu;
 	}
-	public void setLieu(String lieu) {
+	public void setLieu(Lieu lieu) {
 		this.lieu = lieu;
 	}
 	public String getUnite() {

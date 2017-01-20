@@ -71,11 +71,10 @@ public class AdminProduitController {
 	
 	@RequestMapping(value="SaveProduit",method=RequestMethod.POST)
 	public String save(@Valid Produit prod, BindingResult bindingResult){
-		String []prodLieu = prod.getLieu().split(",");
+		String []prodLieu = prod.getLieu().getNom().split(",");
 
 		if (prodLieu[0].equals("Autre")){
-			prod.setLieu(prodLieu[prodLieu.length-1]);
-			lieuRepository.save(new Lieu(prod.getLieu()));
+			prod.setLieu(new Lieu (prodLieu[prodLieu.length-1]));
 		}
 		String [] prodCat = prod.getCategorie().split(",");
 		if (prodCat[0].equals("Autre")){

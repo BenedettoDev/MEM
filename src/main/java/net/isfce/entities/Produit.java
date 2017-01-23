@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
 
@@ -17,6 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Produit implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -34,11 +33,16 @@ public class Produit implements Serializable {
 	private double prix;
 
 	private String unite;
-	private String photo;
+	private String img;
 	
 	private String description;
 	
-	private String categorie;
+	@ManyToOne
+	@JoinColumn(name="FK_categorie")
+	private Categorie categorie;
+
+	private int plu;
+	
 
 
 
@@ -46,29 +50,26 @@ public class Produit implements Serializable {
 		super();
 	}
 
-	public Produit(Long id, String label, String nom, Lieu lieu, double prix, String unite, String photo,
+	public Produit( String label, String nom, Lieu lieu, double prix, String unite, String photo,
 			String description) {
 		super();
-		this.id = id;
 		this.label = label;
 		this.nom = nom;
 		this.lieu = lieu;
 		this.prix = prix;
 		this.unite = unite;
-		this.photo = photo;
+		this.img = photo;
 		this.description = description;
 	}
-	public Produit(Long id, String label, String nom, Lieu lieu, double prix, String unite, String photo,
-			String description,String categorie) {
-		this(id,label,nom,lieu,prix,unite,photo,description);
+	public Produit( String label, String nom, Lieu lieu, double prix, String unite, String photo,
+			String description,Categorie categorie) {
+		this(label,nom,lieu,prix,unite,photo,description);
 		this.categorie=categorie;
 	}
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+
 	public String getLabel() {
 		return label;
 	}
@@ -81,11 +82,11 @@ public class Produit implements Serializable {
 	public void setPrix(double prix) {
 		this.prix = prix;
 	}
-	public String getPhoto() {
-		return photo;
+	public String getImg() {
+		return img;
 	}
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public void setImg(String img) {
+		this.img = img;
 	}
 	public String getNom() {
 		return nom;
@@ -111,12 +112,28 @@ public class Produit implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getCategorie() {
+	public Categorie getCategorie() {
 		return categorie;
 	}
 
-	public void setCategorie(String categorie) {
+	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
+	}
+	
+	public int getPlu() {
+		return plu;
+	}
+
+	public void setPlu(int plu) {
+		this.plu = plu;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "Produit [id=" + id + ", label=" + label + ", nom=" + nom + ", lieu=" + lieu + ", prix=" + prix
+				+ ", unite=" + unite + ", img=" + img + ", description=" + description + ", categorie=" + categorie
+				+ "]";
 	}
 	
 	

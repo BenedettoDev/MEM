@@ -35,9 +35,9 @@ public class produitController {
 		}
 
 		Page<Produit> pageProd = null;
-		if (categorie != null) {
-			pageProd = produitRepository.chercherProduitsByCategory(categorie, new PageRequest(p, 5));
-		}
+//		if (categorie != null) {
+//			pageProd = produitRepository.chercherProduitsByCategory(categorie, new PageRequest(p, 5));
+//		}
 
 		if (mc != null) {
 			pageProd = produitRepository.chercherProduits("%" + mc + "%", new PageRequest(p, 5));

@@ -9,6 +9,9 @@ import javax.persistence.Id;
 @Entity
 public class Lieu implements Serializable {
 
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -39,6 +42,11 @@ public class Lieu implements Serializable {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+	
+	@Override
+	public String toString() {
+		return "Lieu [id=" + id + ", nom=" + nom + "]";
 	}
 
 }

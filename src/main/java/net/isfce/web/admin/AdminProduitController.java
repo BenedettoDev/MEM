@@ -69,31 +69,60 @@ public class AdminProduitController {
 		return "admin/formProduit";
 	}
 	
+	@RequestMapping(value="/GestionLieu",method=RequestMethod.GET)
+	public String formLieu(Model model) {
+		List<Lieu> lieux = lieuRepository.findAll(); 
+		model.addAttribute("listeLieu",lieux);
+		model.addAttribute("lieu",new Lieu());
+		return "admin/GestionLieu";
+	}
+	
+	@RequestMapping(value="/GestionCategorie",method=RequestMethod.GET)
+	public String formCategorie(Model model) {
+		List<Categorie> categorie = categorieRepository.findAll(); 
+		model.addAttribute("listeCategorie",categorie);
+		model.addAttribute("categorie",new Categorie());
+		return "admin/GestionCategorie";
+	}
+	
+	@RequestMapping(value="SaveCategorie",method=RequestMethod.POST)
+	public String saveCategorie(Model model,Categorie categorie, BindingResult bindingResult){
+		categorieRepository.save(categorie);
+		List<Categorie> categories = categorieRepository.findAll(); 
+		model.addAttribute("listeLieu",categories);
+		model.addAttribute("categorie",new Categorie());
+		return "admin/GestionCategorie";
+	}
+	
+	@RequestMapping(value="SaveLieu",method=RequestMethod.POST)
+	public String saveLieu(Model model,Lieu lieu, BindingResult bindingResult){
+		lieuRepository.save(lieu);
+		List<Lieu> lieux = lieuRepository.findAll(); 
+		model.addAttribute("listeLieu",lieux);
+		model.addAttribute("lieu",new Lieu());
+		return "admin/GestionLieu";
+	}
+	
 	@RequestMapping(value="SaveProduit",method=RequestMethod.POST)
-	public String save(@Valid Produit prod, BindingResult bindingResult){
-		String []prodLieu = prod.getLieu().getNom().split(",");
-
-		if (prodLieu[0].equals("Autre")){
-			prod.setLieu(new Lieu (prodLieu[prodLieu.length-1]));
-		}
-		String [] prodCat = prod.getCategorie().split(",");
-		if (prodCat[0].equals("Autre")){
-			prod.setCategorie(prodCat[prodCat.length-1]);
-			categorieRepository.save(new Categorie(prod.getCategorie()));
-		}
-		
+	public String saveProduit( Produit prod, BindingResult bindingResult){
+		System.out.println(prod.toString());
 		if (bindingResult.hasErrors()){
 			return "admin/formProduit";
 		}
-				
 		produitRepository.save(prod);
 		return "redirect:Index";
 	}
 	
-	@RequestMapping(value="Supprimer")
-	public String delete(Long id) {
+	@RequestMapping(value="SupprimerProduit")
+	public String deleteProduit(Long id) {
 		produitRepository.delete(id);
 		 return "redirect:Index";
+	}
+	
+	@RequestMapping(value="SupprimerLieu")
+	public String deleteLieu(Long id) {
+		lieuRepository.delete(id);
+		 return "redirect:GestionLieu";
 	}
 	
 	@RequestMapping(value="Editer")
@@ -124,10 +153,4 @@ public class AdminProduitController {
 		produitRepository.save(prod);
 		 return "redirect:Index";
 	}
-	
-	
-	//Unité
-	
-	
-	
 }

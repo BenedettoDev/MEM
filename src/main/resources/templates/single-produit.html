@@ -16,7 +16,7 @@
 		<div class="col-xs-12 col-sm-6">
 			<p>Lieu :<span th:text="${produit.lieu.nom}"></span></p>
 			<p>Prix :<span th:text="${produit.prix}+' €/'+${produit.unite}"></span></p>
-			<p>Categorie : <span th:text="${produit.categorie}"></span></p>
+			<p>Categorie : <span th:text="${produit.categorie.nom}"></span></p>
 			<p th:text="${produit.description}"></p>
 			
 		</div>

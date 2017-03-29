@@ -1,4 +1,4 @@
-package net.isfce.web;
+package net.mem.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,9 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.isfce.dao.CategorieRepository;
-import net.isfce.dao.ProduitRepository;
-import net.isfce.entities.Produit;
+import net.mem.dao.CategorieRepository;
+import net.mem.dao.ProduitRepository;
+import net.mem.entities.Produit;
 
 @Controller
 @RequestMapping(value = "/Produit")

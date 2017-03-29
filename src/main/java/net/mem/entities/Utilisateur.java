@@ -1,4 +1,4 @@
-package net.isfce.entities;
+package net.mem.entities;
 
 import java.io.Serializable;
 

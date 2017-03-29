@@ -1,4 +1,4 @@
-package net.isfce.web.admin;
+package net.mem.web.admin;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.isfce.dao.CategorieRepository;
-import net.isfce.dao.LieuRepository;
-import net.isfce.dao.ProduitRepository;
-import net.isfce.entities.Categorie;
-import net.isfce.entities.Lieu;
-import net.isfce.entities.Produit;
+import net.mem.dao.CategorieRepository;
+import net.mem.dao.LieuRepository;
+import net.mem.dao.ProduitRepository;
+import net.mem.entities.Categorie;
+import net.mem.entities.Lieu;
+import net.mem.entities.Produit;
 
 
 @Controller

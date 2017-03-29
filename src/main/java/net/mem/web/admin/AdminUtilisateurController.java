@@ -1,4 +1,4 @@
-package net.isfce.web.admin;
+package net.mem.web.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

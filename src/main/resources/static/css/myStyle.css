@@ -88,6 +88,10 @@ header .container {
         margin: 150px auto;
     }
     
+    .produit-list {
+    	max-height: 120px;
+    }
+    
     #case-histoire {
            background: url(../img/home/histoire.jpg) no-repeat center center;
     }

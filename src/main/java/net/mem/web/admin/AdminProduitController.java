@@ -1,5 +1,7 @@
 package net.mem.web.admin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,14 +9,17 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import net.mem.dao.CategorieRepository;
 import net.mem.dao.LieuRepository;
@@ -36,6 +41,9 @@ public class AdminProduitController {
 	@Autowired
 	private CategorieRepository categorieRepository;
 	
+	@Value("${dir.images}")
+	private String imageDir;
+	
 	@RequestMapping(value="/Index")
 	public String Index(Model model,@RequestParam(name="page",defaultValue="0")int p,@RequestParam(name="motCle",defaultValue="")String mc){
 		Page<Produit> pageProd =  produitRepository.chercherProduits("%"+mc+"%",new PageRequest(p, 5));
@@ -48,6 +56,7 @@ public class AdminProduitController {
 		model.addAttribute("pageProduits",pageProd);
 		model.addAttribute("titre","Produits");
 		model.addAttribute("motCle",mc);
+	
 		return "admin/produit";
 	}
 	
@@ -62,10 +71,14 @@ public class AdminProduitController {
 		unites.put("Cl", "Centilitre");
 		unites.put("Ml", "Millilitre");
 		
+		//pour le select
 		model.addAttribute("lieux", lieux);
+		//pour insert un nouveau lieu
+		model.addAttribute("lieu",new Lieu());
 		model.addAttribute("unites", unites);
 		model.addAttribute("categories",categories);
 		model.addAttribute("produit",new Produit());
+	
 		return "admin/formProduit";
 	}
 	
@@ -104,18 +117,33 @@ public class AdminProduitController {
 	}
 	
 	@RequestMapping(value="SaveProduit",method=RequestMethod.POST)
-	public String saveProduit( Produit prod, BindingResult bindingResult){
+	public String saveProduit( Produit prod, BindingResult bindingResult,@RequestParam(name="img_name")MultipartFile file) throws Exception{
 		System.out.println(prod.toString());
 		if (bindingResult.hasErrors()){
 			return "admin/formProduit";
 		}
+		
+		// Enregistrement du nom originale dans la db
+		if (!file.isEmpty()) {
+			prod.setImg(file.getOriginalFilename());
+		} else {
+			prod.setImg("defaut");
+		}
 		produitRepository.save(prod);
+		
+		// Telechargement de l'image dans un dossier
+		if (!file.isEmpty()) {
+			file.transferTo(new File(imageDir+"/"+prod.getId()));
+		}
+
 		return "redirect:Index";
 	}
 	
 	@RequestMapping(value="SupprimerProduit")
 	public String deleteProduit(Long id) {
 		produitRepository.delete(id);
+		File file = new File(imageDir+"/"+id);
+		file.delete();
 		 return "redirect:Index";
 	}
 	
@@ -146,9 +174,14 @@ public class AdminProduitController {
 	}
 	
 	@RequestMapping(value="Update",method=RequestMethod.POST)
-	public String update(@Valid Produit prod, BindingResult bindingResult){
+	public String update(@Valid Produit prod, BindingResult bindingResult,@RequestParam(name="img_name")MultipartFile file) throws Exception{
 		if (bindingResult.hasErrors()){
 			return "admin/EditProduit";
+		}
+		
+		if (!file.isEmpty()) {
+			prod.setImg(file.getOriginalFilename());
+			file.transferTo(new File(imageDir+"/"+prod.getId()));
 		}
 		produitRepository.save(prod);
 		 return "redirect:Index";

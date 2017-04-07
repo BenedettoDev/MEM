@@ -33,7 +33,7 @@
 		<div class="row">
 			<div class="col-sm-6 col-md-2" th:each="p:${pageProduits.content}">
 				<div class="thumbnail">
-					<img th:src="@{/img/default-avatar.png}"  alt="img1" />
+					<img class="img-responsive produit-list" th:src="@{getPhoto(id=${p.id})}" alt="test" />
 					<div class="caption">
 						<a href="" th:href="@{Index(id=${p.id})}"><h3 th:text="${p.nom}"></h3></a>
 					</div>

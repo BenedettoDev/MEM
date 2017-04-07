@@ -8,6 +8,9 @@
 
 
 $(function() {
+
+	
+	// Accueil hashtag
     $('a[href^="#"]').on('click', function(event) {
     var target = $(this.getAttribute('href'));
     if( target.length ) {

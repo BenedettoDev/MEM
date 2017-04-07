@@ -10,17 +10,25 @@
 </head>
 <body>
 	<header th:replace="template :: header"></header>
-	<div class="container spacer">
-	<h1 th:text="${produit.nom}"></h1>
-	<div class="row">
-		<div class="col-xs-12 col-sm-6">
-			<p>Lieu :<span th:text="${produit.lieu.nom}"></span></p>
-			<p>Prix :<span th:text="${produit.prix}+' €/'+${produit.unite}"></span></p>
-			<p>Categorie : <span th:text="${produit.categorie.nom}"></span></p>
-			<p th:text="${produit.description}"></p>
-			
+	<div class="container spacer container-single-produit">
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<img class="img-responsive image-single-produit" th:src="@{getPhoto(id=${produit.id})}" alt="test" />
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<h1 th:text="${produit.nom}"></h1>
+				<p th:text="${produit.description}"></p>
+				<p>
+					Lieu :<span th:text="${produit.lieu.nom}"></span>
+				</p>
+
+				<p>
+					Categorie : <span th:text="${produit.categorie.nom}"></span>
+				</p>
+				<p>Prix :<span th:text="${produit.prix}+' €/'+${produit.unite}"></span></p>
+			</div>
 		</div>
-	</div>
 	</div>
 	<footer th:replace="template :: footer"></footer>
 </body>

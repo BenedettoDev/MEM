@@ -1,12 +1,21 @@
 package net.mem.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.mem.dao.CategorieRepository;
 import net.mem.dao.ProduitRepository;
@@ -20,6 +29,9 @@ public class produitController {
 	@Autowired
 	private CategorieRepository categorieRepository;
 
+	@Value("${dir.images}")
+	private String imageDir;
+	
 	@RequestMapping(value = "/Index")
 	public String Index(Model model, @RequestParam(name = "page", defaultValue = "0") int p,
 			@RequestParam(name = "motCle", defaultValue = "") String mc,
@@ -35,9 +47,11 @@ public class produitController {
 		}
 
 		Page<Produit> pageProd = null;
-//		if (categorie != null) {
-//			pageProd = produitRepository.chercherProduitsByCategory(categorie, new PageRequest(p, 5));
-//		}
+
+		if (categorie != null) {
+			System.out.println(categorie);
+			pageProd = produitRepository.chercherProduitsByCategory(categorie, new PageRequest(p, 5));
+		}
 
 		if (mc != null) {
 			pageProd = produitRepository.chercherProduits("%" + mc + "%", new PageRequest(p, 5));
@@ -55,5 +69,15 @@ public class produitController {
 		model.addAttribute("categories", categorieRepository.findAll());
 
 		return "produit";
+	}
+	
+	@RequestMapping(value="/getPhoto",produces=MediaType.IMAGE_JPEG_VALUE)
+	@ResponseBody
+	public byte[] getPhoto(Long id) throws Exception {
+		File f = new File(imageDir+id);
+		if(!f.exists()){
+			f = new File(imageDir+"defaut");
+		}
+		return IOUtils.toByteArray(new FileInputStream(f));
 	}
 }

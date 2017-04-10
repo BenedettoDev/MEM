@@ -9,19 +9,19 @@
 	th:href="@{/css/myStyle.css}" />
 </head>
 <body>
-	<header class="navbar navbar-inverse navbar-fixed-top"
-		th:fragment="header">
+	<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".nav-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-								<a class="navbar-brand" href="#" th:href="@{/Index}">Pata Negra</a>
-<!-- 				<a class="navbar-brand" href="#" th:href="@{/Index}"><img style="width: 150px;height: auto;" th:src="@{/img/logo_200X200.png}"/></a> -->
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+			
+				<a class="navbar-brand" href="#" th:href="@{/Index}">Pata Negra</a>
 			</div>
-			<div class="navbar-collapse collapse">
+			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li th:classappend="${page == 'home' ? 'active' : ''}"><a
 						href="#" th:href="@{/Index}">Accueil</a></li>
@@ -35,9 +35,10 @@
 				</ul>
 			
 				<ul class="nav navbar-nav navbar-right">
-					<!--                 <li th:if="${#authorization.expression('!isAuthenticated()')}"><a href="/signin" th:href="@{/Login}">Sign in</a></li> -->
-					<!--                 <li th:if="${#authorization.expression('isAuthenticated()')}"><a href="/logout" th:href="@{/Logout}">Logout</a></li> -->
-					<li sec:authorize="isAuthenticated()"><a href="/signin" th:href="@{/Admin/Index}">Admin
+			
+          			<li sec:authorize="hasRole('ROLE_USER')"><a href="/signin" th:href="@{/Utilisateur/Index}">Mon Compte</a></li>
+					<li sec:authorize="hasRole('ROLE_USER')"><a href="/signin" th:href="@{/Utilisateur/Panier}">Mon panier</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/signin" th:href="@{/Admin/Index}">Admin
 							Panel</a></li>
 					<li sec:authorize="isAnonymous()"><a href="/signin" th:href="@{/Login}">Sign in</a></li>
 					<li sec:authorize="isAuthenticated()"><a href="/logout"
@@ -46,32 +47,44 @@
 			</div>
 			<!--/.nav-collapse -->
 		</div>
-	</header>
+	</nav>
 	<div class="col-xs-12 layerSlider" th:fragment="layerSliger"></div>
-	<div class="col-xs-1 adminNav" th:fragment="adminNav">
-		<ul class="nav nav-pills nav-stacked ">
-			<li th:classappend="${titre == 'Produits' ? 'active' : ''}"><a
-				th:href="@{/Admin/Produit/Index}">Produits</a></li>
-			<li th:classappend="${titre == 'Articles' ? 'active' : ''}"><a
-				href="article">Articles</a></li>
-			<li th:classappend="${titre == 'Commandes' ? 'active' : ''}"><a
-				href="commande">Commandes</a></li>
-			<li th:classappend="${titre == 'Suggestions' ? 'active' : ''}"><a
-				href="suggestion">Suggestions</a></li>
-			<li th:classappend="${titre == 'Utilisateur' ? 'active' : ''}"><a
-				href="Utilisateur">Utilisateurs</a></li>
-		</ul>
-
+	
+	<div th:fragment="menuUtilisateur">
+			<ul class="menuUser">
+				<li><a th:href="@{/Utilisateur/Panier}">Mon panier</a></li>
+				<li><a th:href="@{/Utilisateur/Commandes/Index}">Mes Commandes</a></li>
+				<li><a th:href="@{/Utilisateur/Compte/Index}">Info sur mon compte</a></li>
+			</ul>
 	</div>
-
+	
+	<div th:fragment="menuAdmin">
+			<ul class="menuAdmin">
+			<li><a th:href="@{/Admin/Produit/Index}">Produits</a></li>
+			<li><a class="align-middle" href="article">Articles</a></li>
+			<li><a class="align-middle" href="commande">Commandes</a></li>
+			<li><a class="align-middle" href="suggestion">Suggestions</a></li>
+			<li><a class="align-middle" href="Utilisateur">Utilisateurs</a></li>
+		</ul>
+	
+	</div>
+	
 	<footer th:fragment="footer">
 		<div class="container">
 			<p style="text-align: center;">@footer 456</p>
 		</div>
+			<div th:include="fragments/js :: jquerys"></div>
+			<div th:include="fragments/js :: bootstrap"></div>
+   			 <script src="../js/app.js"></script> 
 	</footer>
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div th:fragment="jquerys">
+      <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+</div>
+	<div th:fragment="bootstrap">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</div>
 </body>
 
 </html>

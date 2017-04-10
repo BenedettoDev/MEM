@@ -1,7 +1,6 @@
 package net.mem.web.admin;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,15 +14,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.mem.dao.AllergeneRepository;
 import net.mem.dao.CategorieRepository;
 import net.mem.dao.LieuRepository;
 import net.mem.dao.ProduitRepository;
+import net.mem.entities.Allergene;
 import net.mem.entities.Categorie;
 import net.mem.entities.Lieu;
 import net.mem.entities.Produit;
@@ -40,6 +40,9 @@ public class AdminProduitController {
 	
 	@Autowired
 	private CategorieRepository categorieRepository;
+	
+	@Autowired
+	private AllergeneRepository allergeneRepository;
 	
 	@Value("${dir.images}")
 	private String imageDir;
@@ -98,6 +101,25 @@ public class AdminProduitController {
 		return "admin/GestionCategorie";
 	}
 	
+	@RequestMapping(value="/GestionAllergene",method=RequestMethod.GET)
+	public String formAllergene(Model model) {
+		List<Allergene> allergenes = allergeneRepository.findAll();
+		System.out.println(allergenes.size());
+		model.addAttribute("listeAllergene", allergenes);
+		model.addAttribute("allergene",new Allergene());
+		return "admin/GestionAllergene";
+		
+	}
+	
+	@RequestMapping(value="SaveAllergene",method=RequestMethod.POST)
+	public String saveAllergene(Model model,Allergene allergene,BindingResult bindingResult) {
+		allergeneRepository.save(allergene);
+		List<Allergene> allergenes = allergeneRepository.findAll();
+		model.addAttribute("listeAllergene", allergenes);
+		model.addAttribute("allergene",new Allergene());
+		return "admin/GestionAllergene";
+	}
+	
 	@RequestMapping(value="SaveCategorie",method=RequestMethod.POST)
 	public String saveCategorie(Model model,Categorie categorie, BindingResult bindingResult){
 		categorieRepository.save(categorie);
@@ -116,9 +138,10 @@ public class AdminProduitController {
 		return "admin/GestionLieu";
 	}
 	
+	
+	
 	@RequestMapping(value="SaveProduit",method=RequestMethod.POST)
 	public String saveProduit( Produit prod, BindingResult bindingResult,@RequestParam(name="img_name")MultipartFile file) throws Exception{
-		System.out.println(prod.toString());
 		if (bindingResult.hasErrors()){
 			return "admin/formProduit";
 		}
@@ -135,7 +158,6 @@ public class AdminProduitController {
 		if (!file.isEmpty()) {
 			file.transferTo(new File(imageDir+"/"+prod.getId()));
 		}
-
 		return "redirect:Index";
 	}
 	

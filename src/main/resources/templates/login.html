@@ -10,7 +10,7 @@
 </head>
 <body>
 	<header th:replace="template :: header"></header>
-	<div class="container spacer">
+	<div class="container">
 
 		<div class="col-sm-6 col-sm-offset-3 spacer">
 			<div class="alert alert-danger" th:if="${param.logout}">
@@ -32,29 +32,22 @@
 							<span class="red"> Login ou Mot de passe invalide </span>
 						</div>
 						<div class="form-group">
-							<label class="control-label">Login</label> <input type="text"
-								name="username" class="form-control" /> <span
-								class="text-danger"></span>
+							<label class="control-label">Login</label> 
+							<input type="text" name="username" class="form-control"/> 
+							<span class="text-danger"></span>
 						</div>
 						<div class="form-group">
-							<label class="control-label">Mot de passe</label> <input
-								type="password" name="password" class="form-control" /> <span
-								class="text-danger"></span>
+							<label class="control-label">Mot de passe</label>
+							<input type="password" name="password" class="form-control" />
+							<span class="text-danger"></span>
 						</div>
 						<button type="submit" class="btn btn-primary">Se Logger</button>
+						<a th:href="@{/Inscription}" class="pull-right">Pas encore inscris ?</a>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 	<footer th:replace="template :: footer"></footer>
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-		crossorigin="anonymous"></script>
-
 </body>
 </html>

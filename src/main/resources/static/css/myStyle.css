@@ -1,3 +1,6 @@
+.site {
+	 margin: 30px 0 0 0;
+}
 header .container {
     padding: 0 30px;
 }
@@ -6,11 +9,7 @@ header .container {
     margin-top:65px;
 }
 
-.adminNav {
-    position: absolute;
-    left:0;
-    top:60px;
-}
+
 
 .case div {
     background-color: blue;
@@ -19,6 +18,11 @@ header .container {
 
 @media all {
 
+	.navbar-header a {padding-left : 30px;}
+	    
+    nav .container {
+    	padding-top: 0;
+    }
     .cover-bg {
         margin:0;
         padding:0;
@@ -84,6 +88,7 @@ header .container {
         text-decoration: none;
     }
 
+	.container {padding : 0;}
     .container-detail {
         margin: 150px auto;
     }
@@ -134,17 +139,74 @@ header .container {
         background-attachment: fixed;
         height:350px;
     }
+    
+    .container {
+    	padding-top:50px;
+    }
+    .btn-categorie {
+    }
+        .liste-produits {
+    	margin-top: 10px;
+    }
+    
+    /*******/
+    /***Admin****/
+    /***MENU****/
+    ul.menuAdmin,ul.menuUser {
+		text-decoration: none;
+    }
+    ul.menuAdmin li,ul.menuUser li {
+  		float:left;
+    	list-style-type: none;
+		display: table;
+   	 	table-layout: fixed;
+    	margin:10px;
+    }
+    ul.menuAdmin li a, ul.menuUser li a{
+	    display:table-cell;
+	    vertical-align:middle;
+	    text-align:center;
+		font-size: 1.6em;
+	    width:200px;
+	    height:200px;
+	    background-color: blue;
+		color: #9d9d9d;
+		margin: 10px;
+		text-transform:uppercase;
+		text-align: center;
+    }
+    
+
+    ul.menuAdmin li a:hover,ul.menuUser li a:hover {
+		text-decoration: none;
+			    background-color: #9d9d9d;
+		color: white;
+		
+    }
+    
+    .container-single-produit > img {
+    width: 2px;
+    }
+    
+
 }
 
 @media all and (max-width: 768px) {
 
-
-    html {
+    html, nav {
         min-width: 350px;
+    }
+    
+    .navbar-nav {
+    	margin: 0
+    }
+    
+    .row {
+    	margin: 0;
     }
 
     .cover-bg {
-        height:580px;
+        height: 1200px;
     }
 
     .corps {
@@ -174,15 +236,73 @@ header .container {
         background-color: green;
         margin-bottom: 10px;
     }  
-
+	.case {
+	   flex-wrap: wrap;
+    	margin-top :0px;
+	  }
     .case div {
         position: relative;
         width: 200px;
-        height: 100px;
-        margin: 10px;
+        height: 200px;
+        margin: 5px;
     }
     .case div h2 {
         font-size: 1.3em;
+    }
 
+     .container-detail {
+        margin: 0px auto;
+    }
+    
+	.btn-categorie {
+		width:94%;
+		position:relative;
+		display:block;
+		margin: 0 auto;
+		    padding-right: 15px;
+    padding-left: 15px
+	}
+	.panel-categorie {
+	    padding: 0 20px;
+	}
+    ul.categorie-liste  {
+    	text-decoration: none;
+    } 
+     ul.categorie-liste li {
+    	list-style-type: none;
+    }
+    
+    .liste-produits {
+    	margin-top: 10px;
+    }
+    ul.menuAdmin,ul.menuUser {
+    	text-decoration: none;
+    	padding: 0;
+
+    	border-top: solid 1px #9d9d9d;
+    }
+    ul.menuAdmin li,ul.menuUser li {
+    	display:block;
+    	float:none;
+    	list-style-type: none;
+    	border-bottom: solid 1px #9d9d9d;
+    	width: 100%;
+    	margin: 0px;
+    	text-align: left;
+    }
+    ul.menuAdmin li a,ul.menuUser li a {
+    	display: block;
+    	padding: 5px;
+    	text-align: left;
+    	background-color:white; 
+    	height:auto;
+    	width: 100%;
+    	margin: 0px
+    }
+    
+    ul.menuAdmin li a:hover,ul.menuUser li a:hover  {
+    	text-decoration: none;
+    	color: white;
+    	background-color: #9d9d9d; 
     }
 }

@@ -2,8 +2,6 @@ package net.mem.web;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +34,7 @@ public class produitController {
 	public String Index(Model model, @RequestParam(name = "page", defaultValue = "0") int p,
 			@RequestParam(name = "motCle", defaultValue = "") String mc,
 			@RequestParam(name = "id", required = false) Long id,
-			@RequestParam(name = "cat", defaultValue = "") String categorie) {
+			@RequestParam(name = "cat", defaultValue = "-1") String categorie) {
 
 		if (id != null) {
 			Produit produit = produitRepository.findOne(id);
@@ -48,14 +46,15 @@ public class produitController {
 
 		Page<Produit> pageProd = null;
 
-		if (categorie != null) {
-			System.out.println(categorie);
+		if (!categorie.equals("")) {
 			pageProd = produitRepository.chercherProduitsByCategory(categorie, new PageRequest(p, 5));
-		}
-
-		if (mc != null) {
+		} 
+		if (!mc.equals("")) {
 			pageProd = produitRepository.chercherProduits("%" + mc + "%", new PageRequest(p, 5));
 		}
+		
+
+		
 		int pageCount = pageProd.getTotalPages();
 		int[] pages = new int[pageCount];
 		for (int i = 0; i < pageCount; i++)
@@ -63,7 +62,7 @@ public class produitController {
 
 		model.addAttribute("pages", pages);
 		model.addAttribute("pageCourante", p);
-		model.addAttribute("pageProduits", pageProd);
+		model.addAttribute("pageProduits", (pageProd == null)? produitRepository.findAll() : pageProd);
 		model.addAttribute("titre", "Produits");
 		model.addAttribute("motCle", mc);
 		model.addAttribute("categories", categorieRepository.findAll());

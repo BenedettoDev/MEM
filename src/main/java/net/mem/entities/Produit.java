@@ -1,11 +1,13 @@
 package net.mem.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
@@ -41,6 +43,11 @@ public class Produit implements Serializable {
 	@JoinColumn(name="FK_categorie")
 	private Categorie categorie;
 
+	
+	@ManyToMany
+	@JoinColumn (name="FK_allergene")
+	private Collection<Allergene>allergene; 
+	
 	private int plu;
 	
 
@@ -130,7 +137,14 @@ public class Produit implements Serializable {
 	public void setPlu(int plu) {
 		this.plu = plu;
 	}
-	
+
+	public Collection<Allergene> getAllergene() {
+		return allergene;
+	}
+
+	public void setAllergene(Collection<Allergene> allergene) {
+		this.allergene = allergene;
+	}
 
 	@Override
 	public String toString() {

@@ -10,11 +10,9 @@
 </head>
 <body>
 	<header th:replace="template :: header"></header>
-	<div class="container spacer" th:replace="template :: adminNav">
-	<h1>cc</h1>
-	        <div th:substituteby="index::logout"></div>
+	<div class="container">
+		<div  th:replace="template :: menuAdmin"></div>
 	</div>
-	
 	<footer th:replace="template :: footer"></footer>
 </body>
 </html>

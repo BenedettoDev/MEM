@@ -10,8 +10,7 @@
 </head>
 <body>
 	<header th:replace="template :: header"></header>
-	<div class="container spacer container-single-produit">
-
+	<div class="container container-single-produit">
 		<div class="row">
 			<div class="col-xs-12 col-sm-6">
 				<img class="img-responsive image-single-produit" th:src="@{getPhoto(id=${produit.id})}" alt="test" />
@@ -27,6 +26,8 @@
 					Categorie : <span th:text="${produit.categorie.nom}"></span>
 				</p>
 				<p>Prix :<span th:text="${produit.prix}+' €/'+${produit.unite}"></span></p>
+				 <button type="button" class="btn btn-success" onclick="location.href=''"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>	
+								
 			</div>
 		</div>
 	</div>
